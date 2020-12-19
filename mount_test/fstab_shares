@@ -1,0 +1,1 @@
+//192.168.1.115/Shared /mnt/shared cifs defaults,credentials=/etc/mount_credentials 0 0
