@@ -1,5 +1,9 @@
 # Docker Swarm
-**Setup a Docker swarm demo env with GlusterFS volume replication for persistent storage**
+**Setup a Docker swarm demo env with GlusterFS volume replication for persistent storage and traefik for ingress controller configured to setup routes using labels on deployed stacks/services**
+
+## Infra environment used in this demo
+ - vmware
+ - vmware nsx-loadbalancer
 
 ## Preparations
 **1. Setup 3 nodes swarm cluster with following roles:**
