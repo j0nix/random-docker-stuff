@@ -13,7 +13,7 @@
 **3. Setup GlusterFS**
  - *3 CentOS7 NODEs, EACH NODE HAVE BEEN ADDED A 5G DISK IN VMWARE BEFORE PROCEED WITH BELOW*
 
-```
+`
 [ON ALL NODES]
 yum -y install centos-release-gluster9 && yum -y install glusterfs glusterfs-cli glusterfs-libs glusterfs-server
 systemctl enable glusterd.service && systemctl start glusterd.service
@@ -34,7 +34,7 @@ gluster volume set my-volume-1 auth.allow server-1,server-2,server-3
 mkdir -p /data/glusterfs/j0nixService1
 echo "localhost:/my-volume-1 /data/glusterfs/j0nixService1  glusterfs  defaults,_netdev,backupvolfile-server=localhost  0 0" >> /etc/fstab
 mount -a
-```
+`
 ## Create the ingress controller
 **1. Create a ingress network**
 - `docker network create -d overlay --attachable traefik-public`
@@ -42,12 +42,12 @@ mount -a
 **2. Clone this repo to manager node**
  - *... and enter the cloned repository*
 
-**3. Prep that traefik settings file avaliable
-- mkdir -p /opt/docker/traefik && cp ingress-controller/traefik.yml /opt/docker/traefik
+**3. Prep that traefik settings file avaliable**
+- `mkdir -p /opt/docker/traefik && cp ingress-controller/traefik.yml /opt/docker/traefik`
 
 **4. Deploy that ingress controller**
 *Note that the ingress controller will only be deployed on the manager* 
- - ` docker stack deploy -c ingress-controller/traefik_deployment.yml traefik `
+ - `docker stack deploy -c ingress-controller/traefik_deployment.yml traefik `
 
 ## Prep a html file for that demo
 ***[ON THAT SWARM MANAGER NODE]***
