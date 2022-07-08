@@ -1,0 +1,60 @@
+#docker stack deploy -c docker-compose.yml infrademo
+version: "3.8"
+services:
+  j0nixService1:
+    image: httpd:latest
+    ports:
+      - target: 80
+        protocol: tcp
+    volumes:
+      - "/data/glusterfs/j0nixService1:/usr/local/apache2/htdocs:r"
+    networks:
+      - traefik-public
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.j0nixService1.rule=Host(`j0nix.poc.internal.nordax.com`)"
+        - "traefik.http.services.j0nixService1.loadbalancer.server.port=80"
+      #mode: global
+      replicas: 1
+      placement: 
+        constraints: 
+          - node.role == worker
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 200M
+        reservations:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+
+  j0nixService2:
+    image: nginxdemos/hello
+    ports:
+      - target: 80
+        protocol: tcp
+    networks:
+      - traefik-public
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.j0nixService2.rule=Host(`j0nixrulez.poc.internal.nordax.com`)"
+        - "traefik.http.services.j0nixService2.loadbalancer.server.port=80"
+      mode: global
+      placement: 
+        constraints: 
+          - node.role == worker
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 200M
+        reservations:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+networks:
+  traefik-public:
+    external: true

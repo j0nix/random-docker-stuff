@@ -1,0 +1,34 @@
+# docker network create --driver=overlay traefik-public
+version: '3.8'
+
+services:
+  ingress:
+    image: "traefik:v2.7"
+    ports:
+      - target: 80              # Container port
+        published: 8081         # Port on host
+        protocol: tcp
+        mode: host
+      - target: 8080            # Container port
+        published: 8080         # Port on host
+        protocol: tcp
+        mode: host
+    networks:
+      - traefik-public
+    deploy:
+      labels:
+        - "traefik.enable=false"
+        - "traefik.http.routers.traefik=true"
+        - "traefik.docker.network=traefik-public"
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - /opt/docker/traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+networks:
+  traefik-public:
+    external: true
+    attachable: true

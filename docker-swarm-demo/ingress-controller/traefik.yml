@@ -1,0 +1,23 @@
+global:
+  sendAnonymousUsage: false
+
+api:
+  dashboard: true
+  insecure: true
+
+providers:
+  docker:
+    watch: true
+    swarmMode: true
+    network: traefik-public
+
+accessLog:
+  format: common
+
+log:
+  level: INFO
+  format: common
+
+entryPoints:
+  http:
+    address: ":80"
