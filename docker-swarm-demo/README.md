@@ -42,8 +42,11 @@ mount -a
 **2. Clone this repo to manager node**
  - *... and enter the cloned repository*
 
-**3. Deploy that ingress controller**
-*Ingress controller will only be deployed on the manager* 
+**3. Prep that traefik settings file avaliable
+- mkdir -p /opt/docker/traefik && cp ingress-controller/traefik.yml /opt/docker/traefik
+
+**4. Deploy that ingress controller**
+*Note that the ingress controller will only be deployed on the manager* 
  - ` docker stack deploy -c ingress-controller/traefik_deployment.yml traefik `
 
 ## Prep a html file for that demo
