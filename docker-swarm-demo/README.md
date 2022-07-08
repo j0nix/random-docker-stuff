@@ -16,28 +16,34 @@
 *[ON ALL NODES]*
 
 `yum -y install centos-release-gluster9 && yum -y install glusterfs glusterfs-cli glusterfs-libs glusterfs-server`
+
 `systemctl enable glusterd.service && systemctl start glusterd.service`
+
 `pvcreate /dev/sd<?> && vgcreate glusterfs /dev/sd<?>`
+
 `lvcreate -L 5G -n brick1 glusterfs && mkfs.xfs /dev/mapper/glusterfs-brick1 && mkdir -p /opt/glusterfs/brick1`
+
 `echo "/dev/mapper/glusterfs-brick1 /opt/glusterfs/brick1 xfs defaults 0 0" >> /etc/fstab`
+
 `mount -a`
+
 `mkdir /opt/glusterfs/brick1/volume1`
 
 *[ON THAT SWARM MANAGER NODE]*
-`
-gluster peer probe server2
+
+```gluster peer probe server2
 gluster peer probe server3
 gluster volume create my-volume-1 replica 3 transport tcp <server-1-ip>:/opt/glusterfs/brick1/volume1 <server-2-ip>:/opt/glusterfs/brick1/volume1 <server-3-ip>:/opt/glusterfs/brick1/volume1
 gluster volume start my-volume-1
 gluster volume set my-volume-1 auth.allow server-1,server-2,server-3
-`
+```
  
 *[ON ALL NODES]*
-`
+```
 mkdir -p /data/glusterfs/j0nixService1
 echo "localhost:/my-volume-1 /data/glusterfs/j0nixService1  glusterfs  defaults,_netdev,backupvolfile-server=localhost  0 0" >> /etc/fstab
 mount -a
-`
+```
 
 ## Create the ingress controller
 **1. Create a ingress network**
