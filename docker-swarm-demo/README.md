@@ -58,7 +58,9 @@ mount -a
 ## Prep a html file for that demo
 ***[ON THAT SWARM MANAGER NODE]***
 
-`echo "<html><head><title>DEMO</title></head><body><h2>docker stack deploy -c j0nix_deployments.yml demo</h2><pre>" > /data/glusterfs/j0nixService1/index.html && cat demo-services/j0nix_deployments.yml >> /data/glusterfs/j0nixService1/index.html && echo "</pre></body></html>" >> /data/glusterfs/j0nixService1/index.html`
+```
+echo "<html><head><title>DEMO</title></head><body><h2>docker stack deploy -c j0nix_deployments.yml demo</h2><pre>" > /data/glusterfs/j0nixService1/index.html && cat demo-services/j0nix_deployments.yml >> /data/glusterfs/j0nixService1/index.html && echo "</pre></body></html>" >> /data/glusterfs/j0nixService1/index.html
+```
 
 ## Deploy demo services
 ***[ON THAT SWARM MANAGER NODE]***
